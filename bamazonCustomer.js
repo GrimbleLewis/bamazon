@@ -9,9 +9,19 @@ var connection = mysql.createConnection({
     user: "root",
   
     password: "W00tl00t@",
-    database: "top_songsDB"
+    database: "bamazonDB"
   });
   
   connection.connect(function(err) {
     if (err) throw err;
+    showProducts();
   });
+
+  function showProducts () {
+    var sql = "SELECT * from products"
+
+    connection.query(sql, function (err, result){
+        if (err) throw err;
+        console.log(result);
+    })
+  }
