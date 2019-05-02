@@ -36,13 +36,15 @@ function showProducts() {
 }
 
 function purchaseProduct() {
-  inquirer
-    .prompt([
-      {
-        name: "item",
-        type: "input",
-        message:
-          "What is the item ID number of the product you would like to buy?",
+  connection.query("SELECT item_id,stock_quantity from products", function(err, res) {
+    if (err) throw err;
+    inquirer
+      .prompt([
+        {
+          name: "item",
+          type: "input",
+          message:
+            "What is the item ID number of the product you would like to buy?",
           validate: function(value) {
             if (isNaN(value) === false) {
               return true;
@@ -50,37 +52,38 @@ function purchaseProduct() {
             console.log("  Please provide a number\n");
             return false;
           }
-      },
-      {
-        name: "amount",
-        type: "input",
-        message: "How many units of this product would you like to buy?",
-        validate: function(value) {
-          if (isNaN(value) === false) {
-            return true;
-          } 
-          console.log("  Please provide a number\n");
-          return false;
-        }
-      }
-    ])
-    .then(function(answer) {
-      connection.query("SELECT item_id,stock_quantity from products",
-      function(err, res) {
-        if (err) throw err;
-        var chosenItem;
-        for (var i = 0; i < res.length; i++) {
-          if (res[i].item_id === answer.item) {
-            chosenItem = res[i];
+        },
+        {
+          name: "amount",
+          type: "input",
+          message: "How many units of this product would you like to buy?",
+          validate: function(value) {
+            if (isNaN(value) === false) {
+              return true;
+            }
+            console.log("  Please provide a number\n");
+            return false;
           }
         }
+      ])
+      .then(function(answer) {
+        console.log(answer);
+        var chosenItem;
+        for (var i = 0; i < res.length; i++) {
+          if (res[i].item_id === parseInt(answer.item)) {
+            chosenItem = res[i];
+          }
+          
+        }
 
-      if (chosenItem < parseInt(answer.amount)){
-        console.log("Toomuch")
-      } else {
-        console.log("other")
-      }
-      
-    });
-});
+      // console.log(res);
+      console.log(chosenItem);
+
+        if (chosenItem.stock_quantity < parseInt(answer.amount)) {
+          console.log("Toomuch");
+        } else {
+          console.log("other");
+        }
+      });
+  });
 }
