@@ -1,7 +1,7 @@
 // Welcome to the Bamazon node app!
 // This is a shopping app that allows the user to look at the current items in our inventory and purchase an amount of there choosing
 // This app requires npm to install mysql and inquirer
-// To begin, run this file in the terminal and follow the prompts!
+// To begin, run this file (bamazonCustomer) in the terminal and follow the prompts!
 
 
 var mysql = require("mysql");
@@ -93,7 +93,7 @@ function purchaseProduct() {
             "UPDATE products SET ? WHERE ?",
             [
               {
-                stock_quantity: chosenItem.stock_quantity - answer.amount
+                stock_quantity: chosenItem.stock_quantity - parseInt(answer.amount)
               },
               {
                 item_id: chosenItem.item_id
@@ -105,7 +105,7 @@ function purchaseProduct() {
                 "\nPurchase placed! Your total is $" +
                   (
                     chosenItem.price.toFixed(2) * parseInt(answer.amount)
-                  ).toFixed(2)
+                  ).toFixed(2) + "\n"
               );
               inquirer
                 .prompt({
