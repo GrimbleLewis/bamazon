@@ -21,3 +21,8 @@ If you are a customer, you should run "node bamazonCustomer" in the terminal to 
 
 If you are a manager, you should run "node bamazonManager" in the terminal to get started.
 
+# Sample usage
+
+Here is a short video of the Bamazon app in action!
+
+https://drive.google.com/file/d/10dABqekV5HcSzDfjS6ixHqJ4k-quB6Ri/view?usp=sharing

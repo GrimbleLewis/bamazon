@@ -207,7 +207,7 @@ function addProduct() {
         },
         function(err) {
             if (err) throw err;
-            console.log("\nYour successfully added the product!\n");
+            console.log("\nYou successfully added the product!\n");
             start();
           }
     );
